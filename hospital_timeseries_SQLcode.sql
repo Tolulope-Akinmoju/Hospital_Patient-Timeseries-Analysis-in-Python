@@ -1,7 +1,11 @@
 USE hospital_timeseries;
+
+-- How many values are there in the given dataset
 SELECT *
 FROM patients;
 
+
+-- Count the number of appointments for each day in the given dataset:
 SELECT 
     AppointmentDay, COUNT(*)
 FROM patients
@@ -27,10 +31,14 @@ LIMIT 1;
 
 
 -- Calculate the monthly average number of appointments in the given dataset.
-SELECT 
-   EXTRACT(MONTH FROM (AppointmentDay)) AS months, COUNT(*) AS counts
+WITH Monthly_count AS (SELECT 
+   EXTRACT(MONTH FROM (AppointmentDay)) AS month,
+   COUNT(*) AS counts
 FROM patients
-GROUP BY months;
+GROUP BY month)
+SELECT month, ROUND(AVG(counts), 0) AS avg_counts
+FROM Monthly_count
+GROUP BY month;
 
 
 -- the month with the highest number of appointments in the given dataset.
