@@ -7,7 +7,7 @@ FROM patients;
 
 -- Count the number of appointments for each day in the given dataset:
 SELECT 
-    AppointmentDay, COUNT(*)
+    AppointmentDay, COUNT(*) AS Appointments
 FROM patients
 GROUP BY AppointmentDay; 
 
@@ -16,17 +16,16 @@ WITH CTE AS (SELECT
     AppointmentDay, COUNT(*) AS counts
 FROM patients
 GROUP BY AppointmentDay)
-SELECT AppointmentDay, ROUND(AVG(counts), 0) AS avg_counts
+SELECT ROUND(AVG(counts), 0) AS avg_counts
 FROM CTE
-GROUP BY AppointmentDay;
 
 
 -- Find the day with the highest number of appointments in the given dataset.
 SELECT 
-    AppointmentDay, COUNT(*)
+    AppointmentDay, COUNT(*) AS counts
 FROM patients
 GROUP BY AppointmentDay
-ORDER BY AppointmentDay DESC
+ORDER BY counts DESC
 LIMIT 1; 
 
 
@@ -38,7 +37,8 @@ FROM patients
 GROUP BY month)
 SELECT month, ROUND(AVG(counts), 0) AS avg_counts
 FROM Monthly_count
-GROUP BY month;
+GROUP BY month
+
 
 
 -- the month with the highest number of appointments in the given dataset.
@@ -84,6 +84,7 @@ FROM patients
 GROUP BY weekday
 ORDER BY weekday;
 
+-- OR
 SELECT 
    (DAYNAME(AppointmentDay)) AS dayname, COUNT(*) AS counts
 FROM patients
