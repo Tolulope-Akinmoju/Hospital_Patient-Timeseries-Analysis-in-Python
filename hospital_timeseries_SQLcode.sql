@@ -1,7 +1,7 @@
 USE hospital_timeseries;
 
 -- How many values are there in the given dataset
-SELECT *
+SELECT COUNT(*)
 FROM patients;
 
 
