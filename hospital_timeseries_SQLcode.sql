@@ -127,4 +127,17 @@ GROUP BY Gender, NoShow
 ORDER BY Gender;
 
 
+-- what is the month over month appointment changes
+WITH monthly_appointment AS(SELECT 
+   EXTRACT(MONTH FROM (AppointmentDay)) AS month,
+   COUNT(*) AS appointments
+FROM patients
+GROUP BY month)
+SELECT month, appointments,
+		LAG(appointments) OVER (ORDER BY month) AS previous_month_appointment,
+        appointments- LAG(appointments) OVER (ORDER BY month) AS monthly_appointment_change
+FROM monthly_appointment
+GROUP BY month;
+
+
 
