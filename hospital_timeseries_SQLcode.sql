@@ -97,3 +97,34 @@ SELECT
 FROM patients;
 
 
+-- Appointment Date Distribution, most to least.   
+SELECT AppointmentDay, Count(*) AS count
+FROM patients
+GROUP BY AppointmentDay
+ORDER BY count DESC;
+    
+
+-- Did sending SMS have impact on patient attendance.
+SELECT SMSReceived, Count(*) AS count
+FROM patients
+GROUP BY SMSReceived
+ORDER BY count DESC;
+
+    
+
+-- Distribution of patient that Showed VS NoShow.    
+SELECT NoShow, Count(*) AS count
+FROM patients
+GROUP BY NoShow;
+
+
+
+    
+-- Did more males show up for their appointments than the females?
+SELECT Gender, NoShow, Count(*) AS count
+FROM patients
+GROUP BY Gender, NoShow
+ORDER BY Gender;
+
+
+
